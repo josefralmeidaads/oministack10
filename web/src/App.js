@@ -6,6 +6,7 @@ import './global.css'
 import './App.css'
 import './SideBar.css'
 import './Main.css'
+import DevItem from './components/DevItem'
 
 function App() {
   const [devs, setDevs] = useState([])
@@ -35,7 +36,7 @@ function App() {
       async function loadDevs(){
         const response = await api.get('/devs');
 
-        setDevs(response.data);
+        setDevs(response.data); //setando a variável devs o array de devs
       }
       loadDevs();
   }, []);
@@ -53,8 +54,8 @@ function App() {
     //Limpandos os campos após a gravação
     setGithubUsername('');
     setTechs('');
-    setLatitude('');
-    setLongitude('');
+
+    setDevs([...devs, response.data]); // estou carregando o último dev inserido
   }
 
   return(
@@ -90,18 +91,7 @@ function App() {
       <main>
           <ul>
             {devs.map(dev => (
-              <li key={dev._id} className="dev-item">
-              <header>
-                <img src={dev.avatar_url} alt={dev.name}/>
-                  <div className="user-info">
-                    <strong>{dev.name}</strong>
-                      <span>{dev.techs.join(', ')}</span>
-                  </div>
-              </header>
-              <p className="biografia">Biografia</p> 
-              <p>{dev.bio}</p>
-              <a href={`https://github.com/${github_username}`}>Acessar perfil no GitHub</a>
-            </li>
+              <DevItem key={dev._iD} dev={dev} />
             ))}
           </ul>
       </main>
