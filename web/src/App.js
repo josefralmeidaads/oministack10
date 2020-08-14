@@ -8,13 +8,14 @@ import './SideBar.css'
 import './Main.css'
 
 function App() {
+  const [devs, setDevs] = useState([])
   const [github_username, setGithubUsername] = useState(''); // para armazenar esses valor pelo input, usamos a função onChange=e => setGithubUsername{e.target.value} e atribuir value={github_username}
   const [techs, setTechs] = useState(''); // para armazenar esses valor pelo input, usamos a função onChange=e => setTechs{e.target.value} e atribuir value ={techs}
   const [latitude, setLatitude] = useState(''); // para armazenar esses valores pelo input, usamos a função onChange=e => setLatitude{e.target.value}
   const [longitude, setLongitude] = useState(''); // para armazenar esses valores pelo input, usamos a função onChange=e => setLongitude{e.target.value}
 
   //useEffect serve para executar uma função, e usar uma variável para dizer quando será executada a função, se for um vetor vazio a função é executada uma vez
-  useEffect(() => {
+  useEffect(() => { //Obtendo Geolocalização
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const {latitude, longitude} = position.coords;
@@ -30,7 +31,16 @@ function App() {
       )
   }, []);
 
-  async function handleAddDev(e){
+  useEffect(() => { //Realizando consulta de DEVS apenas UMA VEZ
+      async function loadDevs(){
+        const response = await api.get('/devs');
+
+        setDevs(response.data);
+      }
+      loadDevs();
+  }, []);
+
+  async function handleAddDev(e){ // Função Gravar Devs
     e.preventDefault();
     const response = await api.post('/devs',{
       github_username,
@@ -39,6 +49,12 @@ function App() {
 	    longitude,
     })
     console.log(response.data)
+
+    //Limpandos os campos após a gravação
+    setGithubUsername('');
+    setTechs('');
+    setLatitude('');
+    setLongitude('');
   }
 
   return(
@@ -73,57 +89,20 @@ function App() {
 
       <main>
           <ul>
-              <li className="dev-item">
-                <header>
-                  <img src="https://avatars1.githubusercontent.com/u/69639482?s=460&u=16ce5200e0562f44d5e8059ad80ed7d0f03fc9de&v=4" alt="Jose Filho Almeida"/>
-                    <div className="user-info">
-                      <strong>Jose Filho Almeida</strong>
-                      <span>ReactJS, React Native, NodeJS</span>
-                    </div>
-                </header>
-                <p className="biografia">Biografia</p> 
-                <p>ahsuahsuahsuahsauhsuahsuahsuahsuhasuhaus</p>
-                <a href="https://github.com/josefralmeidaads/Estudos">Acessar perfil no GitHub</a>
-              </li>
-
-              <li className="dev-item">
-                <header>
-                  <img src="https://avatars1.githubusercontent.com/u/69639482?s=460&u=16ce5200e0562f44d5e8059ad80ed7d0f03fc9de&v=4" alt="Jose Filho Almeida"/>
-                    <div className="user-info">
-                      <strong>Jose Filho Almeida</strong>
-                      <span>ReactJS, React Native, NodeJS</span>
-                    </div>
-                </header>
-                <p className="biografia">Biografia</p> 
-                <p>ahsuahsuahsuahsauhsuahsuahsuahsuhasuhauss</p>
-                <a href="https://github.com/josefralmeidaads/Estudos">Acessar perfil no GitHub</a>
-              </li>
-
-              <li className="dev-item">
-                <header>
-                  <img src="https://avatars1.githubusercontent.com/u/69639482?s=460&u=16ce5200e0562f44d5e8059ad80ed7d0f03fc9de&v=4" alt="Jose Filho Almeida"/>
-                    <div className="user-info">
-                      <strong>Jose Filho Almeida</strong>
-                      <span>ReactJS, React Native, NodeJS</span>
-                    </div>
-                </header>
-                <p className="biografia">Biografia</p> 
-                <p>ahsuahsuahsuahsauhsuahsuahsuahsuhasuhaus</p>
-                <a href="https://github.com/josefralmeidaads/Estudos">Acessar perfil no GitHub</a>
-              </li>
-
-              <li className="dev-item">
-                <header>
-                  <img src="https://avatars1.githubusercontent.com/u/69639482?s=460&u=16ce5200e0562f44d5e8059ad80ed7d0f03fc9de&v=4" alt="Jose Filho Almeida"/>
-                    <div className="user-info">
-                      <strong>Jose Filho Almeida</strong>
-                      <span>ReactJS, React Native, NodeJS</span>
-                    </div>
-                </header>
-                <p className="biografia">Biografia</p> 
-                <p>ahsuahsuahsuahsauhsuahsuahsuahsuhasuhaus</p>
-                <a href="https://github.com/josefralmeidaads/Estudos">Acessar perfil no GitHub</a>
-              </li>              
+            {devs.map(dev => (
+              <li key={dev._id} className="dev-item">
+              <header>
+                <img src={dev.avatar_url} alt={dev.name}/>
+                  <div className="user-info">
+                    <strong>{dev.name}</strong>
+                      <span>{dev.techs.join(', ')}</span>
+                  </div>
+              </header>
+              <p className="biografia">Biografia</p> 
+              <p>{dev.bio}</p>
+              <a href={`https://github.com/${github_username}`}>Acessar perfil no GitHub</a>
+            </li>
+            ))}
           </ul>
       </main>
     </div>
