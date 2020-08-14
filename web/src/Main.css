@@ -14,10 +14,3 @@ main ul{
         grid-template-columns: 1fr;
     }
 }
-
-
-li.dev-item{
-    main ul {
-        grid-template-columns: 1fr;
-    }
-}
