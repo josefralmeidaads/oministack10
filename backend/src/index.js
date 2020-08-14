@@ -1,6 +1,7 @@
-const express = require('express');
+const express = require('express')
 const mongoose = require('mongoose')
 const routes = require('./routes') // quando for arquivo deve se passar caminho relativo
+const cors = require('cors')
 
 const app = express(); //Criação da aplicação
 
@@ -9,6 +10,7 @@ mongoose.connect('mongodb+srv://arrowgamer:arrowgamer@cluster0.7qksd.mongodb.net
     useUnifiedTopology: true
 });
 
+app.use(cors()) // se deixar em branxo eu libero qualquer aplicação para acessar minha API
 app.use(express.json()); // usamos o use para se referir a todo tipo de METODO HTTP, e para o express entender o arquivo JSON, informamos ao express para atender requisições do tipo JSON
 
 ///para minha aplicação utilizar minhas rotas do routes

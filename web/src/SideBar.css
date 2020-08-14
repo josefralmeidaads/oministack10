@@ -23,9 +23,9 @@ aside form .input-block + .input-block {
 
 aside form .input-group {
     margin-top: 20px;
-    display: grid;
+    display: grid; /*usando grid para colocar latitude e longitude lado a lado*/
     gap: 20px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* input group cada elemento vai ocupar 50% da tela*/
 } 
 
 aside form .input-group .input-block {

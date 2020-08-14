@@ -13,7 +13,7 @@ html, body, #root {
 
 body{
    background-color: #E5E6F0;
-   -webkit-font-smoothing: antialiased; 
+   -webkit-font-smoothing: antialiased; /*Torna a fonte mais fácil de ser visualizada*/
 }
 
 body, input, button {
