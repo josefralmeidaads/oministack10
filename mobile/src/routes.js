@@ -19,6 +19,13 @@ const Routes = createAppContainer(
                 headerTitleAlign:"center"
             }
         }
+    }, {
+        defaultNavigationOptions: {
+            headerTintColor: '#fff',
+            headerStyle: { // aceita CSS
+                backgroundColor: '#7D40E7'
+            }
+        }, 
     })
 );
 
