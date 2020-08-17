@@ -7,9 +7,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import api from '../services/api'
 
 
+
 function Main({ navigation }){
     const [currentRegion, setcurrentRegion] = useState(null);
     const [devs, setDevs] = useState([]);
+    const [techs, setTechs] = useState('');
 
     const initialRegion = {
         latitude: -37.78825,
@@ -50,9 +52,11 @@ function Main({ navigation }){
             params: {
                 latitude,
                 longitude,
-                techs: 'React, ReactNative, NodeJS'
+                techs
             }
         });
+
+        console.log(response.data)
 
         setDevs(response.data); //gravando os devs em "DEVS" ao receber a resposta da API
     }
@@ -72,19 +76,21 @@ function Main({ navigation }){
         //View tem que ser importada para gerar visualição da tela
         <>
         <MapView onRegionChangeComplete={handleRegionChanged} initialRegion={currentRegion} style={styles.map}>
-            <Marker coordinate={{latitude: -21.216458, longitude: -42.888164}}>
-                <Image style={styles.avatar} source={{uri: 'https://avatars1.githubusercontent.com/u/69639482?s=460&u=16ce5200e0562f44d5e8059ad80ed7d0f03fc9de&v=4'}}/>
+            {devs.map(dev => (
+                <Marker key={dev._id} coordinate={{longitude: dev.location.coordinates[0], latitude: dev.location.coordinates[1]}}>
+                <Image style={styles.avatar} source={{uri: dev.avatar_url}}/>
                 <Callout onPress={() => {
                     //Quando clicar no nome do Dev irá navegar a outra tela
-                    navigation.navigate('Profile', { github_username: 'josefralmeidaads' });
+                    navigation.navigate('Profile', { github_username: dev.github_username });
                 }}>
                     <View style={styles.callout}> 
-                        <Text style={styles.DevName}>José Francisco</Text>
-                        <Text style={styles.DevBio}>Biografia</Text>
-                        <Text style={styles.DevTechs}>React, React Native, NodeJS</Text>
+            <Text style={styles.DevName}>{dev.name}</Text>
+                        <Text style={styles.DevBio}>{dev.bio}</Text>
+                        <Text style={styles.DevTechs}>{dev.techs.join(', ')}</Text>
                     </View>
                 </Callout>
             </Marker>
+            ))}
          </MapView>
          <View style={styles.searchForm}>
             <TextInput placeholder="Buscar Devs por techs" 
@@ -92,6 +98,8 @@ function Main({ navigation }){
                 placeholderTextColor='#999'
                 autoCapitalize='words'
                 autoCorrect={false}
+                value={techs}
+                onChangeText={setTechs}
             />
             <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
                 <MaterialIcons name="my-location" size={25} color="#FFF"/>
