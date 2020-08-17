@@ -4,9 +4,12 @@ import {View, StyleSheet, Text, Image, TextInput, TouchableOpacity} from 'react-
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { requestPermissionsAsync, getCurrentPositionAsync} from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
+import api from '../services/api'
 
 
 function Main({ navigation }){
+    const [currentRegion, setcurrentRegion] = useState(null);
+    const [devs, setDevs] = useState([]);
 
     const initialRegion = {
         latitude: -37.78825,
@@ -15,7 +18,7 @@ function Main({ navigation }){
         longitudeDelta: 0.0421,
       }
 
-    const [currentRegion, setcurrentRegion] = useState(null);
+    
     useEffect(() => {
         async function loadInitialPosition(){ // carregar a posição inicial do mapa 
             const { granted } = await requestPermissionsAsync();
@@ -40,6 +43,25 @@ function Main({ navigation }){
 
     }, []);
 
+    async function loadDevs(){
+        const { latitude, longitude } = currentRegion;
+
+        const response = await api.get('/search', { 
+            params: {
+                latitude,
+                longitude,
+                techs: 'React, ReactNative, NodeJS'
+            }
+        });
+
+        setDevs(response.data); //gravando os devs em "DEVS" ao receber a resposta da API
+    }
+
+    function handleRegionChanged(region){
+        //console.log(region); //verifica se a região esta sendo atualizada junto com a lista 
+        setcurrentRegion(region); // setando ao minha currentRegion a region que estou percorrendo no mapa
+    }
+
     if(!currentRegion){ // enquanto minha posição for nula retorne nulo
         return null
     }
@@ -49,7 +71,7 @@ function Main({ navigation }){
     return (
         //View tem que ser importada para gerar visualição da tela
         <>
-        <MapView  initialRegion={{latitude: -21.216415, longitude: -42.888200, latitudeDelta:0.01, longitudeDelta:0.01}} style={styles.map}>
+        <MapView onRegionChangeComplete={handleRegionChanged} initialRegion={currentRegion} style={styles.map}>
             <Marker coordinate={{latitude: -21.216458, longitude: -42.888164}}>
                 <Image style={styles.avatar} source={{uri: 'https://avatars1.githubusercontent.com/u/69639482?s=460&u=16ce5200e0562f44d5e8059ad80ed7d0f03fc9de&v=4'}}/>
                 <Callout onPress={() => {
@@ -71,8 +93,8 @@ function Main({ navigation }){
                 autoCapitalize='words'
                 autoCorrect={false}
             />
-            <TouchableOpacity onPress={() => {}} style={styles.loadButton}>
-                <MaterialIcons name="my-location" size={20} color="#FFF"/>
+            <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
+                <MaterialIcons name="my-location" size={25} color="#FFF"/>
             </TouchableOpacity>
          </View>
          </>
@@ -137,7 +159,20 @@ const styles = StyleSheet.create({
     },
 
     loadButton: {
-
+        width: 50,
+        height: 50,
+        backgroundColor: '#7D40E7',
+        borderRadius: 50, 
+        alignItems: 'center',
+        justifyContent: 'center',
+        left: 10,
+        elevation: 7,
+        shadowOpacity: 0.2,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 4,
+            height: 4
+        }
     }
 
 })
