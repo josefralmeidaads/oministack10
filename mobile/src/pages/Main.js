@@ -16,11 +16,11 @@ function Main(){
                     enableHighAccuracy: true,
                 });
                 
-                const {latitude, longitude} = coords;
+                const { latitude, longitude } = coords;
 
                 setcurrentRegion({
-                    latitude: -21.216458, 
-                    longitude: -42.888164,
+                    latitude, 
+                    longitude,
                     latitudeDelta: 0.01, // Informação de zoom baseado em calculos navais
                     longitudeDelta: 0.01 // Informação de zoom baseado em calculos navais
                 })
