@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect}from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import { requestPermissionsAsync, getCurrentPositionAsync} from 'expo-location'
 
 function Main(){
@@ -47,9 +46,16 @@ function Main(){
 
     return (
         //View tem que ser importada para gerar visualição da tela
-        <MapView  initialRegion={{latitude: -21.216415, longitude: -42.888200, latitudeDelta:0, longitudeDelta:0}} style={styles.map}>
-            <Marker coordinates={{latitude: -21.216458, longitude: -42.888164}}>
-                <Image style={styles.avatar} source={{uri: 'https://github.com/account'}}/>
+        <MapView  initialRegion={{latitude: -21.216415, longitude: -42.888200, latitudeDelta:0.01, longitudeDelta:0.01}} style={styles.map}>
+            <Marker coordinate={{latitude: -21.216458, longitude: -42.888164}}>
+                <Image style={styles.avatar} source={{uri: 'https://avatars1.githubusercontent.com/u/69639482?s=460&u=16ce5200e0562f44d5e8059ad80ed7d0f03fc9de&v=4'}}/>
+                <Callout>
+                    <View style={styles.callout}> 
+                        <Text style={styles.DevName}>José Francisco</Text>
+                        <Text style={styles.DevBio}>Biografia</Text>
+                        <Text style={styles.DevTechs}>React, React Native, NodeJS</Text>
+                    </View>
+                </Callout>
             </Marker>
          </MapView>
     );
@@ -65,6 +71,24 @@ const styles = StyleSheet.create({
         width: 54,
         height: 54,
         borderColor: '#FFF'
+    },
+
+    callout: {
+        width: 260,
+    },
+
+    DevName: {
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+
+    DevBio: {
+        color: '#666',
+        marginTop: 5
+    },
+
+    DevTechs: {
+
     }
 
 })
