@@ -6,6 +6,14 @@ import * as Location from 'expo-location';
 import { requestPermissionsAsync, getCurrentPositionAsync} from 'expo-location'
 
 function Main(){
+
+    const initialRegion = {
+        latitude: -37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }
+
     const [currentRegion, setcurrentRegion] = useState(null);
     useEffect(() => {
         async function loadInitialPosition(){ // carregar a posição inicial do mapa 
@@ -39,7 +47,7 @@ function Main(){
 
     return (
         //View tem que ser importada para gerar visualição da tela
-        <MapView initialRegion={currentRegion} style={styles.map}>
+        <MapView  initialRegion={{latitude: -21.216415, longitude: -42.888200, latitudeDelta:0, longitudeDelta:0}} style={styles.map}>
             <Marker coordinates={{latitude: -21.216458, longitude: -42.888164}}>
                 <Image style={styles.avatar} source={{uri: 'https://github.com/account'}}/>
             </Marker>
