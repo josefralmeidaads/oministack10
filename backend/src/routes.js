@@ -1,4 +1,4 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const DevController = require('./controllers/DevController')
 const SearchController = require('./controllers/SearchController')
 const routes = Router();
@@ -7,7 +7,7 @@ const Dev = require('../src/models/Dev')
 
 routes.put('/devs', DevController.update);
 
-routes.delete('/devs', DevController.delete);
+routes.delete('/devs/:github_username/', DevController.delete);
 
 routes.post('/devs', DevController.store);
 
