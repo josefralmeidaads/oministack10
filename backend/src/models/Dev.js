@@ -3,6 +3,7 @@ const PointSchema = require('./utils/PointSchema')
 
 //Schema e a entidade do banco
 const Devschema = new mongoose.Schema({
+    indice: Number,
     name: String,
     github_username: String,
     bio: String,

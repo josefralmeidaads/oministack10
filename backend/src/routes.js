@@ -2,12 +2,12 @@ const {Router} = require('express');
 const DevController = require('./controllers/DevController')
 const SearchController = require('./controllers/SearchController')
 const routes = Router();
+const axios = require('axios')
+const Dev = require('../src/models/Dev')
 
+routes.put('/devs', DevController.update);
 
-routes.delete('/devs/:id', (request, response) => {
-    console.log(request.params);
-    return response.json({message: 'Usuário Incluído'});
-});
+routes.delete('/devs', DevController.delete);
 
 routes.post('/devs', DevController.store);
 

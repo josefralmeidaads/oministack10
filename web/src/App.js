@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import api from './services/api.js'
-
-
 import './global.css'
 import './App.css'
 import './SideBar.css'
@@ -27,6 +25,12 @@ function App() {
     setDevs([...devs, response.data]); // estou carregando o último dev inserido
   }
 
+  /*async function handleDeleteDev(data){ // Função Gravar Devs
+    const response = await api.delete('/devs', data)
+    console.log(response.data)
+    //setDevs([...devs, response.data]); // estou carregando o último dev inserido
+  }*/
+
   return(
     <div id="app"> 
       <aside>
@@ -36,7 +40,7 @@ function App() {
       <main>
           <ul>
             {devs.map(dev => (
-              <DevItem key={dev._iD} dev={dev} />
+              <DevItem dev={dev} />
             ))}
           </ul>
       </main>

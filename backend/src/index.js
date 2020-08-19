@@ -10,7 +10,7 @@ mongoose.connect('mongodb+srv://arrowgamer:arrowgamer@cluster0.7qksd.mongodb.net
     useUnifiedTopology: true
 });
 
-app.use(cors()) // se deixar em branxo eu libero qualquer aplicação para acessar minha API
+app.use(cors()) // se deixar em branco eu libero qualquer aplicação para acessar minha API
 app.use(express.json()); // usamos o use para se referir a todo tipo de METODO HTTP, e para o express entender o arquivo JSON, informamos ao express para atender requisições do tipo JSON
 
 ///para minha aplicação utilizar minhas rotas do routes

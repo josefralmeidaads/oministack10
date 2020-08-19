@@ -53,3 +53,7 @@ li.dev-item a:hover {
 li.dev-item .biografia{
     display: block;
 }
+
+li.dev-item #deletebut {
+    margin-left: 98px;
+}

@@ -41,7 +41,20 @@ function DevForm({onSubmit}){
         setTechs('');
     }
 
+    /*async function handleSubmitDelete(e){
+      e.preventDefault();
+
+     await onSubmit({
+          github_username
+      });
+
+      //Limpandos os campos após a gravação
+      setGithubUsername('');
+      setTechs('');
+  }*/
+
     return(
+        <>
         <form onSubmit={handleSubmit}>
                 <div className="input-block">
                     <label htmlFor="github_username">Usuário do GitHub</label>
@@ -66,6 +79,7 @@ function DevForm({onSubmit}){
               </div>    
               <Button variant="contained" color="secondary" type="submit" startIcon={<SaveIcon />}>Salvar</Button>
             </form>
+            </>
     )
 }
 
