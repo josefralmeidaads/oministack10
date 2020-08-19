@@ -22,21 +22,16 @@ module.exports = {
         return response.json({ message: 'User deleted successfully' });
     },
 
-
-
-
     async update(request, response) {
-        const { github_username } = request.body;
+        const { github_username, techs, latitude, longitude } = request.body;
 
-        dev = await Dev.findOne({ github_username });
-
-        console.log(dev);
+        let dev = await Dev.findOne({ github_username });
 
         if (dev) { //se meu dev existir
 
             const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);
 
-            const { name, avatar_url, bio } = apiResponse.data; //desistruturando o data para pegar somente os dados que preciso
+            const { name = login, avatar_url, bio } = apiResponse.data; //desistruturando o data para pegar somente os dados que preciso
 
             const techsArray = ParseStringAsArray(techs);
 

@@ -2,10 +2,10 @@ import React from 'react';
 import DevItem from '../DevItem'
 
 const DevList = (props) => {
-    const { devs, onDelete } = props;
+    const { devs, onDelete, onUpdate } = props;
     return <ul>
         {devs.map(dev => (
-            <DevItem onDelete={onDelete} key={dev.github_username} dev={dev} />
+            <DevItem onUpdate={onUpdate} onDelete={onDelete} key={dev.github_username} dev={dev} />
         ))}
     </ul>
 };

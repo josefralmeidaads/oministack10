@@ -41,18 +41,6 @@ function DevForm({onSubmit}){
         setTechs('');
     }
 
-    /*async function handleSubmitDelete(e){
-      e.preventDefault();
-
-     await onSubmit({
-          github_username
-      });
-
-      //Limpandos os campos após a gravação
-      setGithubUsername('');
-      setTechs('');
-  }*/
-
     return(
         <>
         <form onSubmit={handleSubmit}>

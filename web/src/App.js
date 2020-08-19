@@ -32,6 +32,19 @@ function App() {
     setDevs([...devs, response.data]); // estou carregando o último dev inserido
   }
 
+  const updateDev = async (github_username, techs, latitude, longitude) => {
+    alert(latitude, longitude);
+    const response = await api.put('/devs', {
+   
+      github_username,
+      techs: "Javascript",
+      latitude: 0,
+      longitude: 0
+      
+    });
+    //setDevs([...devs, response.data]); // estou carregando o último dev inserido
+  }
+
   return (
     <div id="app">
       <aside>
@@ -39,7 +52,7 @@ function App() {
         <DevForm onSubmit={handleAddDev} />
       </aside>
       <main>
-        <DevList onDelete={deleteDev} devs={devs} />
+        <DevList onUpdate={updateDev} onDelete={deleteDev} devs={devs} />
       </main>
     </div>
   )

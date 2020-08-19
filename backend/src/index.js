@@ -5,8 +5,7 @@ const cors = require('cors')
 
 const app = express(); //Criação da aplicação
 
-// mongoose.connect('mongodb+srv://arrowgamer:arrowgamer@cluster0.7qksd.mongodb.net/week10?retryWrites=true&w=majority', {
-mongoose.connect('mongodb://localhost:27017/', {
+mongoose.connect('mongodb+srv://arrowgamer:arrowgamer@cluster0.7qksd.mongodb.net/week10?retryWrites=true&w=majority',{
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
