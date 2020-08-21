@@ -1,11 +1,11 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState, useEffect} from 'react';
 import './style.css'
 import SaveIcon from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
 
 function DevForm(props){
 
-  const {onSubmit, title, counter} = props;
+  const {onSubmit, title, counter ,preencheUsername, preencheTechs} = props;
 
   const [github_username, setGithubUsername] = useState(''); // para armazenar esses valor pelo input, usamos a função onChange=e => setGithubUsername{e.target.value} e atribuir value={github_username}
   const [techs, setTechs] = useState(''); // para armazenar esses valor pelo input, usamos a função onChange=e => setTechs{e.target.value} e atribuir value ={techs}
@@ -29,10 +29,10 @@ function DevForm(props){
         )
     }, []);
 
-    useEffect(() => {
+   useEffect(() => {
       if(counter > 0){
-        setGithubUsername('josefralmeidaads')
-        setTechs('React')
+        setGithubUsername(preencheUsername)
+        setTechs(preencheTechs)
       }
     }, [counter])
     
@@ -53,7 +53,7 @@ function DevForm(props){
 
     return(
         <>
-        <form onSubmit={handleSubmit} /*onClick={onChama2}*/>
+        <form onSubmit={handleSubmit}>
                 <div className="input-block">
                     <label htmlFor="github_username">Usuário do GitHub</label>
                     <input name="github_username" id="github_username" required value={github_username} onChange={e => setGithubUsername(e.target.value)}></input>

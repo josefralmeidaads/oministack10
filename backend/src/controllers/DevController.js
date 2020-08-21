@@ -98,7 +98,11 @@ module.exports = {
                 location
             });
 
-        }
+            //return response.json({ message: "Dev Cadastrado com Sucesso!"})
+
+        } //else {
+            //return response.json({ message: "Operação Não Realizada!"})
+        //}
 
         return response.json(dev);
     }

@@ -5,7 +5,7 @@ const DevList = (props) => {
     const { devs, onDelete, onUpdate } = props;
     return <ul>
         {devs.map(dev => (
-            <DevItem  onDelete={onDelete} onUpdate={onUpdate} key={dev.github_username} dev={dev} />
+            <DevItem  onDelete={onDelete} onUpdate={onUpdate} key={dev._id} dev={dev} />
         ))}
     </ul>
 };
