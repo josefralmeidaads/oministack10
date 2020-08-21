@@ -22,10 +22,10 @@ const DevItem = (props) => {
         <p className="biografia">Biografia</p>
         <p>{dev.bio}</p>
         <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no GitHub</a>
-        <IconButton className="button-delete" onClick={() => { onDelete(dev.github_username) }} style={{ "marginLeft": 98 }} aria-label="delete" >
+        <IconButton className="button-delete" onClick={() => { onDelete(dev.github_username) }} style={{ "marginLeft": 98 }} aria-label="delete" id="delete" >
           <DeleteIcon fontSize="small" />
         </IconButton>
-        <Fab color="primary" onClick={() => {onUpdate(dev.github_username, dev.techs.join(', '), dev.latitude, dev.longitude)}} aria-label="edit" style={{"width": 38, "height":38, backgroundColor:"#7D40E7" }}>
+        <Fab color="primary" onClick={() => {onUpdate(dev.github_username, dev.techs.join(', '), dev.latitude, dev.longitude)}} aria-label="edit" id="edit">
           <EditIcon />
         </Fab>
       </li>

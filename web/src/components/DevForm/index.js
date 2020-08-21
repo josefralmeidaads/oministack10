@@ -2,10 +2,12 @@ import React,{useState, useEffect} from 'react';
 import './style.css'
 import SaveIcon from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import AuToRenewIcon from '@material-ui/icons/Autorenew';
 
 function DevForm(props){
 
-  const {onSubmit, title, counter ,preencheUsername, preencheTechs} = props;
+  const {onSubmit, title, counter ,preencheUsername, preencheTechs, atualizaDados, limpaDado} = props;
 
   const [github_username, setGithubUsername] = useState(''); // para armazenar esses valor pelo input, usamos a função onChange=e => setGithubUsername{e.target.value} e atribuir value={github_username}
   const [techs, setTechs] = useState(''); // para armazenar esses valor pelo input, usamos a função onChange=e => setTechs{e.target.value} e atribuir value ={techs}
@@ -29,12 +31,17 @@ function DevForm(props){
         )
     }, []);
 
-   useEffect(() => {
+   useEffect(() => { // se o counter for diferente de zero entra no modo edição
       if(counter > 0){
         setGithubUsername(preencheUsername)
         setTechs(preencheTechs)
       }
     }, [counter])
+
+    useEffect(() => { // se o botão reload for pressionado ele muda o valor do estado e faz a aplicação carregar os dados novamente
+      setGithubUsername('');
+      setTechs('');
+    },[limpaDado])
     
     async function handleSubmit(e){
         e.preventDefault();
@@ -76,6 +83,9 @@ function DevForm(props){
                 </div>
               </div>    
               <Button variant="contained" color="secondary" type="submit" startIcon={<SaveIcon />}>{title}</Button>
+              <Fab color="primary" aria-label="add" className="reload" id="refresh" onClick={atualizaDados}>
+                  <AuToRenewIcon />
+              </Fab>
             </form>
             </>
     )
