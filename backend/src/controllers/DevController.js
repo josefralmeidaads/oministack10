@@ -18,18 +18,25 @@ module.exports = {
 
     async delete(request, response) {
         const { github_username } = request.params;
-        await Dev.findOneAndRemove({ github_username })
-        return response.json({ message: 'User deleted successfully' });
+        
+        let dev = await Dev.findOne({ github_username });
+        
+        if(dev){
+            await Dev.findOneAndRemove({ github_username })
+            return response.json({ message: 'User deleted successfully' });
+        } else {
+            return response.json({ message: 'User Not Deleted'});
+        }
+        
     },
 
     async update(request, response) {
+        
         const { github_username, techs, latitude, longitude } = request.body;
 
-        let dev = await Dev.findOne({ github_username });
-
-        if (dev) { //se meu dev existir
-
-            const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);
+        const filter = {github_username};
+        
+        const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);
 
             const { name = login, avatar_url, bio } = apiResponse.data; //desistruturando o data para pegar somente os dados que preciso
 
@@ -40,19 +47,27 @@ module.exports = {
                 coordinates: [longitude, latitude]
             }
 
-            dev = await Dev.update({
-                name,
-                github_username,
-                bio,
-                avatar_url,
-                techs: techsArray,
-                location
-            });
+        const update = {
+            name,
+            github_username,
+            bio,
+            avatar_url,
+            techs: techsArray,
+            location}
+        
+        let dev = await Dev.findOne({ github_username });
 
-            response.json({ message: 'Usuário Alterado Com Sucesso!' });
+        if(!dev){
+
+            return response.json('Cadastro de Dev Não Localizado')
+            
         } else {
-            response.json({ message: 'Usuário Não Encontrado!' });
+            await Dev.findOneAndUpdate(filter, update, {
+                new: true
+            });
+            return response.json('Cadastro de Dev Atualizado');
         }
+    
     },
 
     async store(request, response) {

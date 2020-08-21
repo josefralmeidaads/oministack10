@@ -3,7 +3,10 @@ import './style.css'
 import SaveIcon from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
 
-function DevForm({onSubmit}){
+function DevForm(props){
+
+  const {onSubmit, title, counter} = props;
+
   const [github_username, setGithubUsername] = useState(''); // para armazenar esses valor pelo input, usamos a função onChange=e => setGithubUsername{e.target.value} e atribuir value={github_username}
   const [techs, setTechs] = useState(''); // para armazenar esses valor pelo input, usamos a função onChange=e => setTechs{e.target.value} e atribuir value ={techs}
   const [latitude, setLatitude] = useState(''); // para armazenar esses valores pelo input, usamos a função onChange=e => setLatitude{e.target.value}
@@ -26,6 +29,13 @@ function DevForm({onSubmit}){
         )
     }, []);
 
+    useEffect(() => {
+      if(counter > 0){
+        setGithubUsername('josefralmeidaads')
+        setTechs('React')
+      }
+    }, [counter])
+    
     async function handleSubmit(e){
         e.preventDefault();
 
@@ -43,7 +53,7 @@ function DevForm({onSubmit}){
 
     return(
         <>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} /*onClick={onChama2}*/>
                 <div className="input-block">
                     <label htmlFor="github_username">Usuário do GitHub</label>
                     <input name="github_username" id="github_username" required value={github_username} onChange={e => setGithubUsername(e.target.value)}></input>
@@ -65,7 +75,7 @@ function DevForm({onSubmit}){
                   <input type="number" name="longitude" id="longitude" required value={longitude} onChange={e => setLongitude(e.target.value)}></input>
                 </div>
               </div>    
-              <Button variant="contained" color="secondary" type="submit" startIcon={<SaveIcon />}>Salvar</Button>
+              <Button variant="contained" color="secondary" type="submit" startIcon={<SaveIcon />}>{title}</Button>
             </form>
             </>
     )
