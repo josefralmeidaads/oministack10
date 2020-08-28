@@ -25,14 +25,14 @@ const DevItem = (props) => {
         <IconButton className="button-delete" onClick={() => { onDelete(dev.github_username) }} style={{ "marginLeft": 98 }} aria-label="delete" id="delete" >
           <DeleteIcon fontSize="small" />
         </IconButton>
-        <Fab color="primary" onClick={() => {onUpdate(dev.github_username, dev.techs.join(', '), dev.latitude, dev.longitude)}} aria-label="edit" id="edit">
+        <Fab color="primary" onClick={() => { onUpdate(dev) }} aria-label="edit" id="edit">
           <EditIcon />
         </Fab>
       </li>
 
     </>
   )
-  
+
 }
 
 export default DevItem
